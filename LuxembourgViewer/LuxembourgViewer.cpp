@@ -13,7 +13,6 @@ LuxembourgViewer::LuxembourgViewer(QWidget *parent)
     luxembourgMap.fill(Qt::white);
 
     QPainter painter(&luxembourgMap);
-    paintNodes(painter);
     paintEdges(painter);
     update();
 }
@@ -65,7 +64,7 @@ void LuxembourgViewer::readXMLFile() {
                     maxLong = longitude;
                 }
 
-                QPointF coord(latitude, longitude);
+                QPointF coord(longitude, latitude);
                 graph.addNode(new Node(coord, id));
             }
 
@@ -91,8 +90,8 @@ void LuxembourgViewer::readXMLFile() {
 
     for (Node* n : graph.getNodes()) {
         QPointF coord = n->getCoordinate();
-        coord.setX((coord.x() - minLat) * (QWidget::width() - 20) / (maxLat - minLat) + 10);
-        coord.setY((coord.y() - minLong) * (QWidget::height() - 20) / (maxLong - minLong) + 10);
+        coord.setX((coord.x() - minLong) * (QWidget::width() - 20) / (maxLong - minLong) + 10);
+        coord.setY((coord.y() - minLat) * (QWidget::height() - 20) / (maxLat - minLat) + 10);
         n->setCoordinate(coord);
     }
 
@@ -157,20 +156,9 @@ void LuxembourgViewer::paintEdges(QPainter& p)
         p.setPen(pen);
 
         QLineF line(e.getFirstNode()->getCoordinate(), e.getSecondNode()->getCoordinate());
-        line.setLength(line.length() - Node::radius);
+        line.setLength(line.length());
         line.setP1(line.p1() + e.getSecondNode()->getCoordinate() - line.p2());
         p.drawLine(line);
-
-        double angle = atan2(line.dy(), -line.dx());
-        QPointF arrowP1 = line.p2()
-            + QPointF(sin(angle + M_PI / 3) * Edge::arrowSize,
-                cos(angle + M_PI / 3) * Edge::arrowSize);
-        QPointF arrowP2 = line.p2()
-            + QPointF(sin(angle + M_PI - M_PI / 3) * Edge::arrowSize,
-                cos(angle + M_PI - M_PI / 3) * Edge::arrowSize);
-
-        p.drawLine(line.p2(), arrowP1);
-        p.drawLine(line.p2(), arrowP2);
     }
 }
 
@@ -223,7 +211,7 @@ void LuxembourgViewer::paintPath(QPainter& p)
         Node* n2 = path[i + 1];
 
         QLineF line(n1->getCoordinate(), n2->getCoordinate());
-        line.setLength(line.length() - Node::radius);
+        line.setLength(line.length());
         line.setP1(line.p1() + n2->getCoordinate() - line.p2());
         p.drawLine(line);
     }
