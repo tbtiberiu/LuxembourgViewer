@@ -87,7 +87,7 @@ void LuxembourgViewer::readXMLFile() {
             }
         }
     }
-
+    
     for (Node* n : graph.getNodes()) {
         QPointF coord = n->getCoordinate();
         coord.setX((coord.x() - minLong) * (QWidget::width() - 20) / (maxLong - minLong) + 10);
@@ -127,16 +127,6 @@ void LuxembourgViewer::paintNodes(QPainter& p)
     for (const Node* n : nodes) {
         QPointF coord = n->getCoordinate();
 
-        if (n == firstSelectedNode) {
-            p.setBrush(Qt::red);
-        }
-        else if (n == secondSelectedNode) {
-            p.setBrush(Qt::blue);
-        }
-        else {
-            p.setBrush(Qt::black);
-        }
-
         QRect r(coord.x() - Node::radius,
             coord.y() - Node::radius,
             2 * Node::radius,
@@ -151,7 +141,7 @@ void LuxembourgViewer::paintEdges(QPainter& p)
 
     for (const Edge& e : edges) {
         QPen pen;
-        pen.setColor(Qt::darkGreen);
+        pen.setColor(Qt::black);
         pen.setWidth(1);
         p.setPen(pen);
 
@@ -202,7 +192,7 @@ void LuxembourgViewer::paintPath(QPainter& p)
     }
 
     QPen pen;
-    pen.setColor(Qt::blue);
+    pen.setColor(Qt::green);
     pen.setWidth(2);
     p.setPen(pen);
 
