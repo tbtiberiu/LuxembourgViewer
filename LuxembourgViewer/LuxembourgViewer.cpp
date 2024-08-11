@@ -21,7 +21,7 @@ LuxembourgViewer::~LuxembourgViewer()
 {}
 
 void LuxembourgViewer::readXMLFile() {
-    QFile file("../LuxembourgViewer/Harta_Luxemburg.xml");
+    QFile file("../LuxembourgViewer/LuxembourgMap.xml");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Error: Cannot open file for reading";
         return;

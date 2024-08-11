@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>Harta_Luxemburg.xml</file>
         <file>Luxembourg.png</file>
+        <file>LuxembourgMap.xml</file>
     </qresource>
 </RCC>
